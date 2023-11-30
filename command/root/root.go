@@ -32,7 +32,7 @@ type RootCommand struct {
 func NewRootCommand() *RootCommand {
 	rootCommand := &RootCommand{
 		baseCmd: &cobra.Command{
-			Short: "MSC is a framework for building Ethereum-compatible Blockchain networks",
+			Short: "MSC is the core clinet application of Mind Smart Chain",
 		},
 	}
 

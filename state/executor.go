@@ -220,39 +220,39 @@ func (e *Executor) BeginTxn(
 
 	// contract deployment access list should be enabled
 	// either if access lists super admin is defined or access lists are defined in the genesis
-	if e.config.AccessListsOwner != nil || e.config.ContractDeployerAllowList != nil {
-		txn.deploymentAllowList = addresslist.NewAddressList(
-			txn, contracts.AllowListContractsAddr)
-	}
+	// if e.config.AccessListsOwner != nil || e.config.ContractDeployerAllowList != nil {
+	// 	txn.deploymentAllowList = addresslist.NewAddressList(
+	// 		txn, contracts.AllowListContractsAddr)
+	// }
 
-	if e.config.AccessListsOwner != nil || e.config.ContractDeployerBlockList != nil {
-		txn.deploymentBlockList = addresslist.NewAddressList(
-			txn, contracts.BlockListContractsAddr)
-	}
+	// if e.config.AccessListsOwner != nil || e.config.ContractDeployerBlockList != nil {
+	// 	txn.deploymentBlockList = addresslist.NewAddressList(
+	// 		txn, contracts.BlockListContractsAddr)
+	// }
 
 	// transaction access list should be enabled
 	// either if access lists super admin is defined or access lists are defined in the genesis
-	if e.config.AccessListsOwner != nil || e.config.TransactionsAllowList != nil {
-		txn.txnAllowList = addresslist.NewAddressList(
-			txn, contracts.AllowListTransactionsAddr)
-	}
+	// if e.config.AccessListsOwner != nil || e.config.TransactionsAllowList != nil {
+	// 	txn.txnAllowList = addresslist.NewAddressList(
+	// 		txn, contracts.AllowListTransactionsAddr)
+	// }
 
-	if e.config.AccessListsOwner != nil || e.config.TransactionsBlockList != nil {
-		txn.txnBlockList = addresslist.NewAddressList(
-			txn, contracts.BlockListTransactionsAddr)
-	}
+	// if e.config.AccessListsOwner != nil || e.config.TransactionsBlockList != nil {
+	// 	txn.txnBlockList = addresslist.NewAddressList(
+	// 		txn, contracts.BlockListTransactionsAddr)
+	// }
 
-	// bridge access list should be enabled
-	// either if access lists super admin is defined or access lists are defined in the genesis
-	if e.config.AccessListsOwner != nil || e.config.BridgeAllowList != nil {
-		txn.bridgeAllowList = addresslist.NewAddressList(
-			txn, contracts.AllowListBridgeAddr)
-	}
+	// // bridge access list should be enabled
+	// // either if access lists super admin is defined or access lists are defined in the genesis
+	// if e.config.AccessListsOwner != nil || e.config.BridgeAllowList != nil {
+	// 	txn.bridgeAllowList = addresslist.NewAddressList(
+	// 		txn, contracts.AllowListBridgeAddr)
+	// }
 
-	if e.config.AccessListsOwner != nil || e.config.BridgeBlockList != nil {
-		txn.bridgeBlockList = addresslist.NewAddressList(
-			txn, contracts.BlockListBridgeAddr)
-	}
+	// if e.config.AccessListsOwner != nil || e.config.BridgeBlockList != nil {
+	// 	txn.bridgeBlockList = addresslist.NewAddressList(
+	// 		txn, contracts.BlockListBridgeAddr)
+	// }
 
 	return txn, nil
 }

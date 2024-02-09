@@ -37,7 +37,7 @@ import (
 	"github.com/0xPolygon/polygon-edge/state"
 	itrie "github.com/0xPolygon/polygon-edge/state/immutable-trie"
 	"github.com/0xPolygon/polygon-edge/state/runtime"
-	"github.com/0xPolygon/polygon-edge/state/runtime/addresslist"
+	//"github.com/0xPolygon/polygon-edge/state/runtime/addresslist"
 	"github.com/0xPolygon/polygon-edge/state/runtime/tracer"
 	"github.com/0xPolygon/polygon-edge/txpool"
 	"github.com/0xPolygon/polygon-edge/types"
@@ -218,28 +218,28 @@ func NewServer(config *Config) (*Server, error) {
 	}
 
 	// apply allow list contracts deployer genesis data
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListContractsAddr,
-		m.config.Chain.Params.ContractDeployerAllowList, m.config.Chain.Params.AccessListsOwner)
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListContractsAddr,
+	// 	m.config.Chain.Params.ContractDeployerAllowList, m.config.Chain.Params.AccessListsOwner)
 
-	// apply block list contracts deployer genesis data
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListContractsAddr,
-		m.config.Chain.Params.ContractDeployerBlockList, m.config.Chain.Params.AccessListsOwner)
+	// // apply block list contracts deployer genesis data
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListContractsAddr,
+	// 	m.config.Chain.Params.ContractDeployerBlockList, m.config.Chain.Params.AccessListsOwner)
 
-	// apply transactions execution allow list genesis data
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListTransactionsAddr,
-		m.config.Chain.Params.TransactionsAllowList, m.config.Chain.Params.AccessListsOwner)
+	// // apply transactions execution allow list genesis data
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListTransactionsAddr,
+	// 	m.config.Chain.Params.TransactionsAllowList, m.config.Chain.Params.AccessListsOwner)
 
-	// apply transactions execution block list genesis data
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListTransactionsAddr,
-		m.config.Chain.Params.TransactionsBlockList, m.config.Chain.Params.AccessListsOwner)
+	// // apply transactions execution block list genesis data
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListTransactionsAddr,
+	// 	m.config.Chain.Params.TransactionsBlockList, m.config.Chain.Params.AccessListsOwner)
 
-	// apply bridge allow list genesis data (owner is omitted for bridge allow list)
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListBridgeAddr,
-		m.config.Chain.Params.BridgeAllowList, m.config.Chain.Params.AccessListsOwner)
+	// // apply bridge allow list genesis data (owner is omitted for bridge allow list)
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.AllowListBridgeAddr,
+	// 	m.config.Chain.Params.BridgeAllowList, m.config.Chain.Params.AccessListsOwner)
 
-	// apply bridge block list genesis data (owner is omitted for bridge block list)
-	addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListBridgeAddr,
-		m.config.Chain.Params.BridgeBlockList, m.config.Chain.Params.AccessListsOwner)
+	// // apply bridge block list genesis data (owner is omitted for bridge block list)
+	// addresslist.ApplyGenesisAllocs(m.config.Chain.Genesis, contracts.BlockListBridgeAddr,
+	// 	m.config.Chain.Params.BridgeBlockList, m.config.Chain.Params.AccessListsOwner)
 
 	var initialStateRoot = types.ZeroHash
 

@@ -243,71 +243,71 @@ func (p *genesisParams) generatePolyBftChainConfig(o command.OutputFormatter) er
 		Mixhash:    polybft.PolyBFTMixDigest,
 	}
 
-	if len(p.contractDeployerAllowListAdmin) != 0 {
-		// only enable allow list if there is at least one address as **admin**, otherwise
-		// the allow list could never be updated
-		chainConfig.Params.ContractDeployerAllowList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.contractDeployerAllowListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.contractDeployerAllowListEnabled),
-		}
-	}
+	// if len(p.contractDeployerAllowListAdmin) != 0 {
+	// 	// only enable allow list if there is at least one address as **admin**, otherwise
+	// 	// the allow list could never be updated
+	// 	chainConfig.Params.ContractDeployerAllowList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.contractDeployerAllowListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.contractDeployerAllowListEnabled),
+	// 	}
+	// }
 
-	if len(p.contractDeployerBlockListAdmin) != 0 {
-		// only enable block list if there is at least one address as **admin**, otherwise
-		// the block list could never be updated
-		chainConfig.Params.ContractDeployerBlockList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.contractDeployerBlockListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.contractDeployerBlockListEnabled),
-		}
-	}
+	// if len(p.contractDeployerBlockListAdmin) != 0 {
+	// 	// only enable block list if there is at least one address as **admin**, otherwise
+	// 	// the block list could never be updated
+	// 	chainConfig.Params.ContractDeployerBlockList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.contractDeployerBlockListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.contractDeployerBlockListEnabled),
+	// 	}
+	// }
 
-	if len(p.transactionsAllowListAdmin) != 0 {
-		// only enable allow list if there is at least one address as **admin**, otherwise
-		// the allow list could never be updated
-		chainConfig.Params.TransactionsAllowList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.transactionsAllowListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.transactionsAllowListEnabled),
-		}
-	}
+	// if len(p.transactionsAllowListAdmin) != 0 {
+	// 	// only enable allow list if there is at least one address as **admin**, otherwise
+	// 	// the allow list could never be updated
+	// 	chainConfig.Params.TransactionsAllowList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.transactionsAllowListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.transactionsAllowListEnabled),
+	// 	}
+	// }
 
-	if len(p.transactionsBlockListAdmin) != 0 {
-		// only enable block list if there is at least one address as **admin**, otherwise
-		// the block list could never be updated
-		chainConfig.Params.TransactionsBlockList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.transactionsBlockListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.transactionsBlockListEnabled),
-		}
-	}
+	// if len(p.transactionsBlockListAdmin) != 0 {
+	// 	// only enable block list if there is at least one address as **admin**, otherwise
+	// 	// the block list could never be updated
+	// 	chainConfig.Params.TransactionsBlockList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.transactionsBlockListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.transactionsBlockListEnabled),
+	// 	}
+	// }
 
-	if len(p.bridgeAllowListAdmin) != 0 {
-		// only enable allow list if there is at least one address as **admin**, otherwise
-		// the allow list could never be updated
-		chainConfig.Params.BridgeAllowList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.bridgeAllowListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.bridgeAllowListEnabled),
-		}
-	}
+	// if len(p.bridgeAllowListAdmin) != 0 {
+	// 	// only enable allow list if there is at least one address as **admin**, otherwise
+	// 	// the allow list could never be updated
+	// 	chainConfig.Params.BridgeAllowList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.bridgeAllowListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.bridgeAllowListEnabled),
+	// 	}
+	// }
 
-	if len(p.bridgeBlockListAdmin) != 0 {
-		// only enable block list if there is at least one address as **admin**, otherwise
-		// the block list could never be updated
-		chainConfig.Params.BridgeBlockList = &chain.AddressListConfig{
-			AdminAddresses:   stringSliceToAddressSlice(p.bridgeBlockListAdmin),
-			EnabledAddresses: stringSliceToAddressSlice(p.bridgeBlockListEnabled),
-		}
-	}
+	// if len(p.bridgeBlockListAdmin) != 0 {
+	// 	// only enable block list if there is at least one address as **admin**, otherwise
+	// 	// the block list could never be updated
+	// 	chainConfig.Params.BridgeBlockList = &chain.AddressListConfig{
+	// 		AdminAddresses:   stringSliceToAddressSlice(p.bridgeBlockListAdmin),
+	// 		EnabledAddresses: stringSliceToAddressSlice(p.bridgeBlockListEnabled),
+	// 	}
+	// }
 
-	if p.accessListsOwner != "" {
-		value := types.StringToAddress(p.accessListsOwner)
-		chainConfig.Params.AccessListsOwner = &value
-	}
+	// if p.accessListsOwner != "" {
+	// 	value := types.StringToAddress(p.accessListsOwner)
+	// 	chainConfig.Params.AccessListsOwner = &value
+	// }
 
-	if p.isBurnContractEnabled() {
-		// only populate base fee and base fee multiplier values if burn contract(s)
-		// is provided
-		chainConfig.Genesis.BaseFee = command.DefaultGenesisBaseFee
-		chainConfig.Genesis.BaseFeeEM = command.DefaultGenesisBaseFeeEM
-	}
+	// if p.isBurnContractEnabled() {
+	// 	// only populate base fee and base fee multiplier values if burn contract(s)
+	// 	// is provided
+	// 	chainConfig.Genesis.BaseFee = command.DefaultGenesisBaseFee
+	// 	chainConfig.Genesis.BaseFeeEM = command.DefaultGenesisBaseFeeEM
+	// }
 
 	return helper.WriteGenesisConfigToDisk(chainConfig, params.genesisPath)
 }

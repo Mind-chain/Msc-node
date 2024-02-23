@@ -407,7 +407,7 @@ func opMload(c *state) {
 		return
 	}
 
-	c.push1().SetBytes(c.tmp)
+	c.push0().SetBytes(c.tmp)
 }
 
 var (
@@ -557,7 +557,7 @@ func opSha3(c *state) {
 
 	c.tmp = keccak.Keccak256(c.tmp[:0], c.tmp)
 
-	v := c.push1()
+	v := c.push0()
 	v.SetBytes(c.tmp)
 }
 
@@ -568,7 +568,7 @@ func opPop(c *state) {
 // context operations
 
 func opAddress(c *state) {
-	c.push1().SetBytes(c.msg.Address.Bytes())
+	c.push0().SetBytes(c.msg.Address.Bytes())
 }
 
 func opBalance(c *state) {
@@ -588,7 +588,7 @@ func opBalance(c *state) {
 		return
 	}
 
-	c.push1().Set(c.host.GetBalance(addr))
+	c.push0().Set(c.host.GetBalance(addr))
 }
 
 func opSelfBalance(c *state) {
@@ -598,7 +598,7 @@ func opSelfBalance(c *state) {
 		return
 	}
 
-	c.push1().Set(c.host.GetBalance(c.msg.Address))
+	c.push0().Set(c.host.GetBalance(c.msg.Address))
 }
 
 func opChainID(c *state) {
@@ -608,19 +608,19 @@ func opChainID(c *state) {
 		return
 	}
 
-	c.push1().SetUint64(uint64(c.host.GetTxContext().ChainID))
+	c.push0().SetUint64(uint64(c.host.GetTxContext().ChainID))
 }
 
 func opOrigin(c *state) {
-	c.push1().SetBytes(c.host.GetTxContext().Origin.Bytes())
+	c.push0().SetBytes(c.host.GetTxContext().Origin.Bytes())
 }
 
 func opCaller(c *state) {
-	c.push1().SetBytes(c.msg.Caller.Bytes())
+	c.push0().SetBytes(c.msg.Caller.Bytes())
 }
 
 func opCallValue(c *state) {
-	v := c.push1()
+	v := c.push0()
 	if value := c.msg.Value; value != nil {
 		v.Set(value)
 	} else {
@@ -647,11 +647,11 @@ func opCallDataLoad(c *state) {
 }
 
 func opCallDataSize(c *state) {
-	c.push1().SetUint64(uint64(len(c.msg.Input)))
+	c.push0().SetUint64(uint64(len(c.msg.Input)))
 }
 
 func opCodeSize(c *state) {
-	c.push1().SetUint64(uint64(len(c.code)))
+	c.push0().SetUint64(uint64(len(c.code)))
 }
 
 func opExtCodeSize(c *state) {
@@ -668,18 +668,18 @@ func opExtCodeSize(c *state) {
 		return
 	}
 
-	c.push1().SetUint64(uint64(c.host.GetCodeSize(addr)))
+	c.push0().SetUint64(uint64(c.host.GetCodeSize(addr)))
 }
 
 func opGasPrice(c *state) {
-	c.push1().SetBytes(c.host.GetTxContext().GasPrice.Bytes())
+	c.push0().SetBytes(c.host.GetTxContext().GasPrice.Bytes())
 }
 
 func opReturnDataSize(c *state) {
 	if !c.config.Byzantium {
 		c.exit(errOpCodeNotFound)
 	} else {
-		c.push1().SetUint64(uint64(len(c.returnData)))
+		c.push0().SetUint64(uint64(len(c.returnData)))
 	}
 }
 
@@ -703,7 +703,7 @@ func opExtCodeHash(c *state) {
 		return
 	}
 
-	v := c.push1()
+	v := c.push0()
 	if c.host.Empty(address) {
 		v.Set(zero)
 	} else {
@@ -712,15 +712,15 @@ func opExtCodeHash(c *state) {
 }
 
 func opPC(c *state) {
-	c.push1().SetUint64(uint64(c.ip))
+	c.push0().SetUint64(uint64(c.ip))
 }
 
 func opMSize(c *state) {
-	c.push1().SetUint64(uint64(len(c.memory)))
+	c.push0().SetUint64(uint64(len(c.memory)))
 }
 
 func opGas(c *state) {
-	c.push1().SetUint64(c.gas)
+	c.push0().SetUint64(c.gas)
 }
 
 func (c *state) setBytes(dst, input []byte, size uint64, dataOffset *big.Int) {
@@ -888,23 +888,23 @@ func opBlockHash(c *state) {
 }
 
 func opCoinbase(c *state) {
-	c.push1().SetBytes(c.host.GetTxContext().Coinbase.Bytes())
+	c.push0().SetBytes(c.host.GetTxContext().Coinbase.Bytes())
 }
 
 func opTimestamp(c *state) {
-	c.push1().SetInt64(c.host.GetTxContext().Timestamp)
+	c.push0().SetInt64(c.host.GetTxContext().Timestamp)
 }
 
 func opNumber(c *state) {
-	c.push1().SetInt64(c.host.GetTxContext().Number)
+	c.push0().SetInt64(c.host.GetTxContext().Number)
 }
 
 func opDifficulty(c *state) {
-	c.push1().SetBytes(c.host.GetTxContext().Difficulty.Bytes())
+	c.push0().SetBytes(c.host.GetTxContext().Difficulty.Bytes())
 }
 
 func opGasLimit(c *state) {
-	c.push1().SetInt64(c.host.GetTxContext().GasLimit)
+	c.push0().SetInt64(c.host.GetTxContext().GasLimit)
 }
 
 func opBaseFee(c *state) {
@@ -980,7 +980,7 @@ func opPush(n int) instruction {
 		ins := c.code
 		ip := c.ip
 
-		v := c.push1()
+		v := c.push0()
 		if ip+1+n > len(ins) {
 			v.SetBytes(append(ins[ip+1:], make([]byte, n)...))
 		} else {
@@ -997,7 +997,7 @@ func opDup(n int) instruction {
 			c.exit(&runtime.StackUnderflowError{StackLen: c.sp, Required: n})
 		} else {
 			val := c.peekAt(n)
-			c.push1().Set(val)
+			c.push0().Set(val)
 		}
 	}
 }
@@ -1080,7 +1080,7 @@ func opCreate(op OpCode) instruction {
 
 		contract, err := c.buildCreateContract(op)
 		if err != nil {
-			c.push1().Set(zero)
+			c.push0().Set(zero)
 
 			if contract != nil {
 				c.gas += contract.Gas
@@ -1098,7 +1098,7 @@ func opCreate(op OpCode) instruction {
 		// Correct call
 		result := c.host.Callx(contract, c.host)
 
-		v := c.push1()
+		v := c.push0()
 		if op == CREATE && c.config.Homestead && errors.Is(result.Err, runtime.ErrCodeStoreOutOfGas) {
 			v.Set(zero)
 		} else if op == CREATE && result.Failed() && !errors.Is(result.Err, runtime.ErrCodeStoreOutOfGas) {
@@ -1162,7 +1162,7 @@ func opCall(op OpCode) instruction {
 
 		contract, offset, size, err := c.buildCallContract(op)
 		if err != nil {
-			c.push1().Set(zero)
+			c.push0().Set(zero)
 
 			if contract != nil {
 				c.gas += contract.Gas
@@ -1179,7 +1179,7 @@ func opCall(op OpCode) instruction {
 
 		result := c.host.Callx(contract, c.host)
 
-		v := c.push1()
+		v := c.push0()
 		if result.Succeeded() {
 			v.Set(one)
 		} else {

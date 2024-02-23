@@ -45,6 +45,7 @@ func (b *bitmap) setCode(code []byte) {
 }
 
 func isPushOp(i byte) bool {
-	// From PUSH1 (0x60) to PUSH32(0x7F)
-	return i>>5 == 3
+	// From PUSH0 (0x5F) to PUSH32(0x7F)
+	return i >= 0x5F && i <= 0x7F
 }
+

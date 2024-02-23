@@ -33,7 +33,8 @@ func (b *bitmap) setCode(code []byte) {
 
 		if isPushOp(c) {
 			// push op
-			i += int(c) - 0x60 + 2
+			pushLength := int(c) - int(PUSH1) + 2 // Calculate the length of the push instruction
+			i += pushLength                         // Increment i by the length of the push instruction
 		} else {
 			if c == JUMPDEST {
 				// jumpdest
@@ -43,6 +44,7 @@ func (b *bitmap) setCode(code []byte) {
 		}
 	}
 }
+
 
 func isPushOp(i byte) bool {
 	// From PUSH0 (0x60) to PUSH32(0x7F)

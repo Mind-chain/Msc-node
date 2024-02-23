@@ -402,7 +402,7 @@ func opCodesToString(from, to OpCode, str string) {
 
 func init() {
 	// write push
-	opCodesToString(PUSH1, PUSH32, "PUSH")
+	opCodesToString(PUSH0, PUSH32, "PUSH")
 	// write dup
 	opCodesToString(DUP1, DUP16, "DUP")
 	// write log

@@ -129,10 +129,10 @@ func (c *state) exit(err error) {
 }
 
 func (c *state) push(val *big.Int) {
-	c.push1().Set(val)
+	c.push0().Set(val)
 }
 
-func (c *state) push1() *big.Int {
+func (c *state) push0() *big.Int {
 	if len(c.stack) > c.sp {
 		c.sp++
 

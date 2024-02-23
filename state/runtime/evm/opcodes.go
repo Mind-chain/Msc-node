@@ -200,64 +200,114 @@ const (
 	// JUMPDEST corresponds to a possible jump destination
 	JUMPDEST = 0x5B
 
-	// PUSH1 pushes a 1-byte value onto the stack
-	PUSH1 = 0x60
+	// PUSH0 represents the number 0
+	PUSH0 = 0x5F
 
-	// PUSH32 pushes a 32-byte value onto the stack
+	// PUSH1 to PUSH32 place i bytes item on stack
+	PUSH1 = 0x60
+	PUSH2 = 0x61
+	PUSH3 = 0x62
+	PUSH4 = 0x63
+	PUSH5 = 0x64
+	PUSH6 = 0x65
+	PUSH7 = 0x66
+	PUSH8 = 0x67
+	PUSH9 = 0x68
+	PUSH10 = 0x69
+	PUSH11 = 0x6A
+	PUSH12 = 0x6B
+	PUSH13 = 0x6C
+	PUSH14 = 0x6D
+	PUSH15 = 0x6E
+	PUSH16 = 0x6F
+	PUSH17 = 0x70
+	PUSH18 = 0x71
+	PUSH19 = 0x72
+	PUSH20 = 0x73
+	PUSH21 = 0x74
+	PUSH22 = 0x75
+	PUSH23 = 0x76
+	PUSH24 = 0x77
+	PUSH25 = 0x78
+	PUSH26 = 0x79
+	PUSH27 = 0x7A
+	PUSH28 = 0x7B
+	PUSH29 = 0x7C
+	PUSH30 = 0x7D
+	PUSH31 = 0x7E
 	PUSH32 = 0x7F
 
-	// DUP1 clones the last value on the stack
+	// DUP1 to DUP16 duplicates the i-th stack item
 	DUP1 = 0x80
-
-	// DUP16 clones the 16th last value on the stack
+	DUP2 = 0x81
+	DUP3 = 0x82
+	DUP4 = 0x83
+	DUP5 = 0x84
+	DUP6 = 0x85
+	DUP7 = 0x86
+	DUP8 = 0x87
+	DUP9 = 0x88
+	DUP10 = 0x89
+	DUP11 = 0x8A
+	DUP12 = 0x8B
+	DUP13 = 0x8C
+	DUP14 = 0x8D
+	DUP15 = 0x8E
 	DUP16 = 0x8F
 
-	// SWAP1 swaps the last two values on the stack
+	// SWAP1 to SWAP16 exchanges 1st and i-th stack items
 	SWAP1 = 0x90
-
-	// SWAP16 swaps the top of the stack with the 17th last element
+	SWAP2 = 0x91
+	SWAP3 = 0x92
+	SWAP4 = 0x93
+	SWAP5 = 0x94
+	SWAP6 = 0x95
+	SWAP7 = 0x96
+	SWAP8 = 0x97
+	SWAP9 = 0x98
+	SWAP10 = 0x99
+	SWAP11 = 0x9A
+	SWAP12 = 0x9B
+	SWAP13 = 0x9C
+	SWAP14 = 0x9D
+	SWAP15 = 0x9E
 	SWAP16 = 0x9F
 
-	// LOG0 fires an event without topics
+	// LOG0 to LOG4 logs data
 	LOG0 = 0xA0
-
-	// LOG1 fires an event with one topic
 	LOG1 = 0xA1
-
-	// LOG2 fires an event with two topics
 	LOG2 = 0xA2
-
-	// LOG3 fires an event with three topics
 	LOG3 = 0xA3
-
-	// LOG4 fires an event with four topics
 	LOG4 = 0xA4
 
-	// CREATE creates a child contract
+	// CREATE creates a new contract
 	CREATE = 0xF0
 
-	// CALL calls a method in another contract
+	// CALL calls a contract
 	CALL = 0xF1
 
-	// CALLCODE calls a method in another contract
+	// CALLCODE calls a contract with a copy of its own code
 	CALLCODE = 0xF2
 
-	// RETURN returns from this contract call
+	// RETURN halts execution and returns data
 	RETURN = 0xF3
 
-	// DELEGATECALL calls a method in another contract using the storage of the current contract
+	// DELEGATECALL calls a contract using the same state
 	DELEGATECALL = 0xF4
 
-	// CREATE2 creates a child contract with a salt
+	// CREATE2 creates a new contract with a salt
 	CREATE2 = 0xF5
 
-	// STATICCALL calls a method in another contract
+	// STATICCALL calls a contract with a static state
 	STATICCALL = 0xFA
 
-	// REVERT reverts with return data
+	// REVERT halts execution and reverts state changes
 	REVERT = 0xFD
 
-	// SELFDESTRUCT destroys the contract and sends all funds to addr
+	// INVALID invalid instruction
+	INVALID = 0xFE
+
+	// SELFDESTRUCT halts execution and marks the account for deletion
 	SELFDESTRUCT = 0xFF
 )
 
@@ -311,6 +361,8 @@ var opCodeToString = map[OpCode]string{
 	NUMBER:         "NUMBER",
 	DIFFICULTY:     "DIFFICULTY",
 	GASLIMIT:       "GASLIMIT",
+	CHAINID:        "CHAINID",
+	SELFBALANCE:    "SELFBALANCE",
 	BASEFEE:        "BASEFEE",
 	POP:            "POP",
 	MLOAD:          "MLOAD",
@@ -333,8 +385,7 @@ var opCodeToString = map[OpCode]string{
 	STATICCALL:     "STATICCALL",
 	REVERT:         "REVERT",
 	SELFDESTRUCT:   "SELFDESTRUCT",
-	CHAINID:        "CHAINID",
-	SELFBALANCE:    "SELFBALANCE",
+	PUSH0:          "PUSH0",
 }
 
 func opCodesToString(from, to OpCode, str string) {

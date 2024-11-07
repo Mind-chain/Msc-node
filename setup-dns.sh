@@ -7,27 +7,44 @@
 PORT=10001
 
 # Parse arguments
-for arg in "$@"
+while [[ $# -gt 0 ]]
 do
-    case $arg in
+    key="$1"
+    case $key in
+        --domain)
+        DOMAIN="$2"
+        shift 2
+        ;;
+        --ip)
+        IP="$2"
+        shift 2
+        ;;
+        --p2p-addr)
+        P2P_ADDR="$2"
+        shift 2
+        ;;
+        --port)
+        PORT="$2"
+        shift 2
+        ;;
         --domain=*)
-        DOMAIN="${arg#*=}"
+        DOMAIN="${key#*=}"
         shift
         ;;
         --ip=*)
-        IP="${arg#*=}"
+        IP="${key#*=}"
         shift
         ;;
         --p2p-addr=*)
-        P2P_ADDR="${arg#*=}"
+        P2P_ADDR="${key#*=}"
         shift
         ;;
         --port=*)
-        PORT="${arg#*=}"
+        PORT="${key#*=}"
         shift
         ;;
         *)
-        echo "Unknown argument: $arg"
+        echo "Unknown argument: $key"
         exit 1
         ;;
     esac
@@ -35,7 +52,7 @@ done
 
 # Check for required arguments
 if [ -z "$DOMAIN" ] || [ -z "$IP" ] || [ -z "$P2P_ADDR" ]; then
-    echo "Usage: $0 --domain=<your-domain> --ip=<your-ip> --p2p-addr=<your-peer-id> [--port=<custom-port>]"
+    echo "Usage: $0 --domain <your-domain> --ip <your-ip> --p2p-addr <your-peer-id> [--port <custom-port>]"
     exit 1
 fi
 
@@ -44,7 +61,11 @@ echo "Installing necessary packages (nginx, certbot)..."
 sudo apt update
 sudo apt install -y nginx certbot python3-certbot-nginx
 
-# Step 2: Set up Nginx configuration for the domain with reverse proxy
+# Step 2: Obtain SSL certificate using Let's Encrypt
+echo "Obtaining SSL certificate for $DOMAIN..."
+sudo certbot certonly --standalone -d $DOMAIN --non-interactive --agree-tos --email nlgsakib@gmail.com
+
+# Step 3: Set up Nginx configuration for the domain with reverse proxy
 NGINX_CONF="/etc/nginx/sites-available/$DOMAIN"
 
 if [ ! -f "$NGINX_CONF" ]; then
@@ -82,10 +103,6 @@ EOL
 else
     echo "Nginx configuration for $DOMAIN already exists."
 fi
-
-# Step 3: Obtain SSL certificate using Let's Encrypt
-echo "Obtaining SSL certificate for $DOMAIN..."
-sudo certbot --nginx -d $DOMAIN --non-interactive --agree-tos --email admin@$DOMAIN
 
 # Step 4: Test Nginx and reload
 echo "Testing and reloading Nginx..."
